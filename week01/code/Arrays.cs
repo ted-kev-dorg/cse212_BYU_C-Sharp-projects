@@ -1,3 +1,5 @@
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client.Payloads;
+
 public static class Arrays
 {
     /// <summary>
@@ -9,11 +11,19 @@ public static class Arrays
     public static double[] MultiplesOf(double number, int length)
     {
         // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // 1. Create an array of doubles with the specified length to store the multiples.
+        // 2. Loop from 1 to the specified length (inclusive).
+        // 3. For each iteration i, calculate the multiple by multiplying the starting number by i.
+        // 4. Store the calculated multiple in the array at index i-1.
+        // 5. After the loop finishes, return the array of multiples.
+        double[] multiples = new double[length];
 
-        return []; // replace this return statement with your own
+        for (int i = 1; i <= length; i++) //Loop from 1 to the specified length
+        {
+            multiples[i - 1] = number * i; // calculate the multiple & Store the calculated multiple in the array at index i-1.
+        }
+
+        return multiples; // return the array of multiples.
     }
 
     /// <summary>
@@ -26,8 +36,22 @@ public static class Arrays
     public static void RotateListRight(List<int> data, int amount)
     {
         // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+
+        // 1. Calculate the index at which the rotation split happens, which is data.Count - amount.
+        int splitIndex = data.Count - amount;
+
+        // 2. Use GetRange to extract the last 'amount' elements starting from the splitIndex.
+        List<int> elementsToMove = data.GetRange(splitIndex, amount);
+
+        // 3. Remove the last 'amount' elements from the original list using RemoveRange.
+        data.RemoveRange(splitIndex, amount);
+
+        // 4. Insert the extracted elements at the start of the list using InsertRange.
+        data.InsertRange(0, elementsToMove);
+
+
+
+
+
     }
 }
