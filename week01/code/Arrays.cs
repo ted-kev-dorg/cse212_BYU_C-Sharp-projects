@@ -48,10 +48,5 @@ public static class Arrays
 
         // 4. Insert the extracted elements at the start of the list using InsertRange.
         data.InsertRange(0, elementsToMove);
-
-
-
-
-
     }
 }

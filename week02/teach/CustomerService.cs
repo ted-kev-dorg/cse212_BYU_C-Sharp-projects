@@ -87,10 +87,16 @@ public class CustomerService {
     /// <summary>
     /// Dequeue the next customer and display the information.
     /// </summary>
-    private void ServeCustomer() {
+    private void ServeCustomer()
+    {
         _queue.RemoveAt(0);
         var customer = _queue[0];
         Console.WriteLine(customer);
+
+        if (_queue.Count == 0)
+        {
+            Console.WriteLine("Sorry, there is no customer in the line ");
+        }
     }
 
     /// <summary>
