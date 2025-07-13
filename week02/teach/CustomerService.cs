@@ -14,6 +14,9 @@ public class CustomerService {
         // Scenario: 
         // Expected Result: 
         Console.WriteLine("Test 1");
+        var cs = new CustomerService(10);
+        cs.AddNewCustomer();        
+        cs.ServeCustomer();
 
         // Defect(s) Found: 
 
@@ -23,6 +26,14 @@ public class CustomerService {
         // Scenario: 
         // Expected Result: 
         Console.WriteLine("Test 2");
+        cs = new CustomerService(10);
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
+        Console.WriteLine($"Before serving customers: {cs}");
+        cs.ServeCustomer();
+        cs.ServeCustomer();
+        Console.WriteLine($"After serving customers: {cs}");
+
 
         // Defect(s) Found: 
 
@@ -67,7 +78,7 @@ public class CustomerService {
     /// </summary>
     private void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        if (_queue.Count >= _maxSize) {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
@@ -87,16 +98,18 @@ public class CustomerService {
     /// <summary>
     /// Dequeue the next customer and display the information.
     /// </summary>
-    private void ServeCustomer()
-    {
-        _queue.RemoveAt(0);
-        var customer = _queue[0];
-        Console.WriteLine(customer);
-
-        if (_queue.Count == 0)
+    private void ServeCustomer(){
+        if (_queue.Count <= 0)
         {
-            Console.WriteLine("Sorry, there is no customer in the line ");
+            Console.WriteLine("Sorry, there is no customer in the line");
         }
+        else
+        {
+            var customer = _queue[0];
+            _queue.RemoveAt(0);
+            Console.WriteLine(customer);
+        }
+        
     }
 
     /// <summary>
