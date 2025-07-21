@@ -334,7 +334,7 @@ public class EarthquakeDailySummaryTests
 {
     [TestMethod]
     public void EarthquakeDailySummary_Basic()
-    {
+    { 
         var result = SetsAndMaps.EarthquakeDailySummary();
         Assert.IsTrue(result.Length > 5, "Too few earthquakes");
 

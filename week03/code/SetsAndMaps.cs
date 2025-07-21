@@ -22,7 +22,33 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        // Use a HashSet for fast lookup
+        var wordSet = new HashSet<string>(words);
+        var result = new List<string>();
+        var seen = new HashSet<string>();
+        foreach (var word in words)
+        {
+            if (seen.Contains(word))
+                continue;
+
+            // Skip words like "aa"
+            if (word[0] == word[1])
+                continue;
+
+            // Create reversed version
+            var reversed = $"{word[1]}{word[0]}";
+
+            // Check if reverse exists in the set
+            if (wordSet.Contains(reversed))
+            {
+                // Add a consistent representation so we don’t add reverse pair again
+                result.Add($"{word} & {reversed}");
+                seen.Add(reversed);
+                seen.Add(word);
+            }
+        }
+
+        return result.ToArray();
     }
 
     /// <summary>
@@ -43,6 +69,19 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+            if (fields.Length < 4)
+                continue; // Skip if line doesn't have at least 4 columns
+
+            var degree = fields[3].Trim(); // Get 4th column and remove whitespace
+
+            if (degrees.ContainsKey(degree))
+            {
+                degrees[degree]++;
+            }
+            else
+            {
+                degrees[degree] = 1;
+            }
         }
 
         return degrees;
@@ -66,8 +105,38 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
-        // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        // TODO Problem 3 - ADD YOUR CODE HERE// Normalize: remove spaces and convert to lowercase
+        var w1 = word1.Replace(" ", "").ToLower();
+        var w2 = word2.Replace(" ", "").ToLower();
+
+        // Early exit if lengths don't match
+        if (w1.Length != w2.Length)
+            return false;
+
+        // Count letters in word1
+        var letterCount = new Dictionary<char, int>();
+        foreach (var c in w1)
+        {
+            if (letterCount.ContainsKey(c))
+                letterCount[c]++;
+            else
+                letterCount[c] = 1;
+        }
+
+        // Subtract letter counts using word2
+        foreach (var c in w2)
+        {
+            if (!letterCount.ContainsKey(c))
+                return false;
+
+            letterCount[c]--;
+
+            // If any letter count goes negative, it's not an anagram
+            if (letterCount[c] < 0)
+                return false;
+        }
+
+        return true;
     }
 
     /// <summary>
